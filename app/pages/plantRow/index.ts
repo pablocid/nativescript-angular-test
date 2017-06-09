@@ -1,0 +1,1 @@
+export { PlantRowComponent } from './list.component';

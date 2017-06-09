@@ -1,0 +1,7 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var sqlite_1 = require("./sqlite");
+exports.LocalDB = sqlite_1.LocalDB;
+var loki_1 = require("./loki");
+exports.Collection = loki_1.Collection;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJpbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLG1DQUFtQztBQUExQiwyQkFBQSxPQUFPLENBQUE7QUFDaEIsK0JBQW9DO0FBQTNCLDRCQUFBLFVBQVUsQ0FBQSIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCB7IExvY2FsREIgfSBmcm9tICcuL3NxbGl0ZSc7XG5leHBvcnQgeyBDb2xsZWN0aW9uIH0gZnJvbSAnLi9sb2tpJztcbmV4cG9ydCB7IExva2lGYWNlLCBMb2tpQ2hhaW4sIExva2lDb2xsZWN0aW9uIH0gZnJvbSAnLi9sb2tpLmludGVyZmFjZXMnOyJdfQ==

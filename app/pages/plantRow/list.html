@@ -1,0 +1,82 @@
+<!--<ListView [items]="myItems | async" (itemTap)="onItemTap($event)" >
+    <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
+        <GridLayout>
+            <Label [text]='item.spot'></Label>
+        </GridLayout>
+    </ng-template>
+</ListView> -->
+
+
+<!--
+    <RadListView [items]="myItems | async"  >
+        <ng-template tkListItemTemplate let-item="item">
+            <StackLayout orientation="vertical">
+                <Label class="nameLabel" [text]="item.id"></Label>
+                <Label class="descriptionLabel" [text]="item.spot"></Label>
+            </StackLayout>
+        </ng-template>
+    </RadListView>
+-->
+
+<!--
+<RadSideDrawer tkExampleTitle tkToggleNavButton>
+    <StackLayout tkDrawerContent class="sideStackLayout">
+        <StackLayout class="sideTitleStackLayout">
+            <Label text="Navigation Menu"></Label>
+        </StackLayout>
+        <StackLayout class="sideStackLayout">
+            <Label text="Primary" class="sideLabel sideLightGrayLabel"></Label>
+            <Label text="Social" class="sideLabel"></Label>
+            <Label text="Promotions" class="sideLabel"></Label>
+            <Label text="Labels" class="sideLabel sideLightGrayLabel"></Label>
+            <Label text="Important" class="sideLabel"></Label>
+            <Label text="Starred" class="sideLabel"></Label>
+            <Label text="Sent Mail" class="sideLabel"></Label>
+            <Label text="Drafts" class="sideLabel"></Label>
+        </StackLayout>
+        <Label text="Close Drawer" color="lightgray" padding="10" style="horizontal-align: center" (tap)="onCloseDrawerTap()"></Label>
+    </StackLayout>
+    <StackLayout tkMainContent>
+        <Label [text]="mainContentText" textWrap="true" class="drawerContentText"></Label>
+        <Button text="OPEN DRAWER" (tap)="openDrawer()" class="drawerContentButton"></Button>
+    </StackLayout>
+</RadSideDrawer>
+-->
+<GridLayout>
+
+    <RadListView [items]="rowHolder.row | async" tkExampleTitle tkToggleNavButton #rdid >
+        <ng-template tkListItemTemplate let-item="item" let-index="index">
+            <StackLayout orientation="vertical">
+                <Label [text]="item.id"></Label>
+                <Label [text]="item.spot"></Label>
+
+                <StackLayout orientation="horizontal">
+                    <Label text="espaldera "></Label>
+                    <Label [text]="item.espaldera"></Label>
+                </StackLayout>
+                <StackLayout orientation="horizontal">
+                    <Label text="hilera "></Label>
+                    <Label [text]="item.hilera"></Label>
+                </StackLayout>
+                <StackLayout orientation="horizontal">
+                    <Label text="posicion "></Label>
+                    <Label [text]="item.position"></Label>
+                </StackLayout>
+
+                <Button text="GO" (onTap)="onTap(item.id, index)"></Button>
+            </StackLayout>
+        </ng-template>
+        <ng-template tkListViewHeader>
+            <GridLayout backgroundColor="#65a565">
+                <Label text="This is the list header"></Label>
+                <Button text="index" (tap)="goToIndex()"></Button>                
+            </GridLayout>
+        </ng-template>
+        <ng-template tkListViewFooter>
+            <GridLayout backgroundColor="#7fff7f">
+                <Label text="This is the list footer"></Label>
+            </GridLayout>
+        </ng-template>
+    </RadListView>
+
+</GridLayout>

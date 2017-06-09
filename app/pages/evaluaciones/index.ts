@@ -1,0 +1,1 @@
+export { EvaluacionesComponent } from './evaluaciones.component';

@@ -1,0 +1,10 @@
+
+<StackLayout>
+    <Button text="drop table" (tap)="dropTable()"></Button>
+    <Button text="add item" (tap)="addItem(name)"></Button>
+    <Button text="get items" (tap)="getItems()"></Button>
+
+    <TextField hint="name" secure="false" [(ngModel)]="name"></TextField>
+
+    <Button text="go Back" (tap)="goBack()"></Button>
+</StackLayout>

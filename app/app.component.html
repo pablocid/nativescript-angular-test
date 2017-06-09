@@ -1,0 +1,9 @@
+<StackLayout>
+    <Image class="pic" src="https://www.nativescript.org/images/default-source/landingpages/logo.png"></Image>
+    <TextField hint="Email Address" keyboardType="email" [(ngModel)]="user.email"
+    autocorrect="false" autocapitalizationType="none"></TextField>
+    <TextField hint="Password" secure="false" [(ngModel)]="user.password"></TextField>
+
+    <Button [text]="isLoggingIn ? 'Sign in' : 'Sign up'" class="submit-button" (tap)="submit()"></Button>
+    <Button [text]="isLoggingIn ? 'Sign up' : 'Back to login'" (tap)="toggleDisplay()"></Button>
+</StackLayout>
