@@ -13,7 +13,7 @@ import { RadListView, ListViewEventData } from "nativescript-telerik-ui/listview
 import { RadListViewComponent, ItemEventArgs } from "nativescript-telerik-ui/listview/angular";
 
 import { Page } from "ui/page";
-
+import { TabView, SelectedIndexChangedEventData, TabViewItem } from "ui/tab-view";
 @Component({
     selector: "plant-row",
     templateUrl: "pages/plantRow/list.html",
@@ -24,6 +24,11 @@ export class PlantRowComponent implements OnInit {
     public myItems: BehaviorSubject<Plant[]>;
     public result: string;
     public index: number;
+    public tabIndex: number;
+    public tab: TabView;
+
+    @ViewChild('rdid') listViewComponent: RadListViewComponent;
+    @ViewChild('tabEvaluation') tabHash: TabView;
 
     constructor(
         private router: Router,
@@ -33,18 +38,8 @@ export class PlantRowComponent implements OnInit {
         private page: Page,
         private aRoute: ActivatedRoute
     ) {
-        this.controller = new RecordController();
-        // var listview: RadListView = <RadListView>page.getViewById("rdid");
-        // console.log(listview);
-        //listview.scrollToIndex(10);
-        this.page.on('loaded', () => {
-            console.log('onPageLoad')
-            this.krap()
-        })
     }
 
-
-    @ViewChild('rdid') listViewComponent: RadListViewComponent;
 
     public onPTap(i: number) {
         console.log('onPTap', i)
@@ -52,29 +47,10 @@ export class PlantRowComponent implements OnInit {
         this.listViewComponent.listView.scrollToIndex(i);
     }
 
-    krap() {
-        this.aRoute.params.subscribe(x => {
-            console.log(' this.aRoute.params.subscribe')
-            try {
-                //console.log('trying', x.index)
-                
-                console.log(typeof x.index)
-                this.index = parseInt(x.index);
-                console.log(typeof this.index)
-
-                this.onPTap(this.index);
-                // const index = parseInt(x.index);
-                // console.log(x.index);
-                // console.log(JSON.stringify(x))
-                // if (index) {
-                //     this.onPTap(index);
-                // }
-            } catch (e) {
-                console.log('no se pudo parsear el index')
-            }
-
-        })
-    }
+    // public onIndexChanged(args) {
+    //     let tabView = <TabView>args.object;
+    //     console.log("Selected index changed! New inxed: " + tabView.selectedIndex);
+    // }
 
     onPageLoaded() {
         console.log("onPageLoaded");
@@ -83,19 +59,55 @@ export class PlantRowComponent implements OnInit {
     goToIndex() {
         this.onPTap(this.index);
     }
+
     onItemLoading($event) {
         console.log('loading event', Object.keys($event))
     }
 
     ngOnInit() {
-        this.rowHolder.row.subscribe(s => {
-            if (s.length === 0) {
-                this.controller.getRow(5, 10)
-                    .then(x => x.sort((a, b) => { return a.position - b.position }))
-                    .then(p => this.rowHolder.row.next(p))
-            }
+        console.log('NG ON INIT')
+        //this.tab = <TabView>this.page.getViewById('tabEvaluation');
+        // this.controller = new RecordController();
+
+        // console.log('isEmpty', this.rowHolder.row.)
+        // this.rowHolder.row.subscribe(s => {
+        //     console.log('rowHolderSubscribe')
+        //     if (s.length === 0) {
+        //         this.controller.getRow(5, 10)
+        //             .then(x => x.sort((a, b) => { return a.position - b.position }))
+        //             .then(p => this.rowHolder.row.next(p))
+        //     }
+        // });
+
+        this.rowHolder.tabIndex.subscribe(z => {
+            console.log('tabIndex', z)
         })
-        this.krap()
+
+        // this.aRoute.paramMap.subscribe(x => {
+        //     console.log('paramMap');
+        //     console.log(x.get('index'))
+        //     console.log('close paramMap');
+        // })
+
+        // this.aRoute.params.subscribe(x => {
+        //     console.log(' this.aRoute.params.subscribe')
+        //     this.tab.selectedIndex = 0;
+        //     try {
+
+        //     } catch (e) {
+        //         console.log('no se pudo parsear el index')
+        //     }
+
+        // })
+
+        // this.rowHolder.tabIndex.subscribe(z =>{
+        //     this.tab.selectedIndex = z;
+        // })
+
+
+        this.page.on('loaded', () => {
+            console.log('onPageLoad')
+        })
 
     }
 
@@ -105,15 +117,12 @@ export class PlantRowComponent implements OnInit {
     }
     onTap(id, index) {
         console.log(index);
-        //alert(id)
-        //this.gotTo('evaluaciones')
-        //this.onPTap();
-        //this.show(true, id, index);
-        this.gotTo('evaluaciones', index);
+        this.rowHolder.tabIndex.next(3)
+        this.router.navigate(['/plantList/evaluaciones', { index }]);
     }
 
     gotTo(value: string, index: number) {
-        this.router.navigate(['/' + value, { index }]);
+        this.router.navigate([value, { index }]);
     }
 
     onItemPress($event) {
@@ -128,28 +137,7 @@ export class PlantRowComponent implements OnInit {
         };
 
         this.modalService
-            .showModal(DialogContent, options)
-            .then((dialogResult: any) => {
-                //this.onPTap(dialogResult.index);
-            })
+            .showModal(DialogContent, options);
     }
-
-    // public onPullToRefreshInitiated(args) {
-    //     var that = new WeakRef(this);
-    //     timerModule.setTimeout(function () {
-    //         var initialNumberOfItems = that.get()._numberOfAddedItems;
-    //         for (var i = that.get()._numberOfAddedItems; i < initialNumberOfItems + 2; i++) {
-    //             if (i > posts.names.length - 1) {
-    //                 break;
-    //             }
-    //             var imageUri = Application.android ? posts.images[i].toLowerCase() : posts.images[i];
-
-    //             that.get()._dataItems.splice(0, 0, new DataItem(i, posts.names[i], "This is item description", posts.titles[i], posts.text[i], "res://" + imageUri));
-    //             that.get()._numberOfAddedItems++;
-    //         }
-    //         var listView = args.object;
-    //         listView.notifyPullToRefreshFinished();
-    //     }, 1000);
-    // }
 
 }

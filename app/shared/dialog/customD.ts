@@ -1,8 +1,10 @@
-import { Component, ViewContainerRef, AfterViewInit } from "@angular/core";
+import { Component, ViewContainerRef, AfterViewInit, OnInit } from "@angular/core";
 import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/modal-dialog";
 import { DialogContent } from './dialogContent';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Page } from 'ui/page';
+import { RecordController, Plant } from '../../shared/record';
+import { RowHolder } from '../../shared/services';
 
 @Component({
     template: `
@@ -13,19 +15,28 @@ import { Page } from 'ui/page';
         </StackLayout>
     `
 })
-export class CustomDialogTest implements AfterViewInit {
+export class CustomDialogTest implements AfterViewInit, OnInit {
     public result: string;
+    public controller: RecordController;
 
     constructor(
         private modalService: ModalDialogService,
         private viewContainerRef: ViewContainerRef,
         private route: Router,
-        private page:Page
-    ) { 
+        private rowHolder: RowHolder,
+        private page: Page
+    ) {
         console.log('custom')
         this.page.on('loaded', () => {
             console.log('onPageLoad')
         })
+    }
+
+    ngOnInit() {
+        this.controller = new RecordController();
+        this.controller.getRow(5, 10)
+            .then(x => x.sort((a, b) => { return a.position - b.position }))
+            .then(p => this.rowHolder.row.next(p))
     }
 
     ngAfterViewInit() {

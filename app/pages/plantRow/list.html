@@ -42,8 +42,54 @@
     </StackLayout>
 </RadSideDrawer>
 -->
-<GridLayout>
 
+<TabView [selectedIndex]="rowHolder.tabIndex | async" sdkExampleTitle sdkToggleNavButton id="tabEvaluation" #tabEvaluation>
+    <StackLayout *tabItem="{title: 'Evaluado'}">
+        <RadListView [items]="rowHolder.row | async" tkExampleTitle tkToggleNavButton #rdid >
+        <ng-template tkListItemTemplate let-item="item" let-index="index">
+            <StackLayout orientation="vertical">
+                <Label [text]="item.id"></Label>
+                <Label [text]="item.spot"></Label>
+
+                <StackLayout orientation="horizontal">
+                    <Label text="espaldera "></Label>
+                    <Label [text]="item.espaldera"></Label>
+                </StackLayout>
+                <StackLayout orientation="horizontal">
+                    <Label text="hilera "></Label>
+                    <Label [text]="item.hilera"></Label>
+                </StackLayout>
+                <StackLayout orientation="horizontal">
+                    <Label text="posicion "></Label>
+                    <Label [text]="item.position"></Label>
+                </StackLayout>
+
+                <Button text="GO" (onTap)="onTap(item.id, index)"></Button>
+            </StackLayout>
+        </ng-template>
+        <ng-template tkListViewHeader>
+            <StackLayout backgroundColor="#65a565">
+                <Label text="This is the list header"></Label>
+                <Button text="index" (tap)="goToIndex()"></Button>                
+            </StackLayout>
+        </ng-template>
+        <ng-template tkListViewFooter>
+            <GridLayout backgroundColor="#7fff7f">
+                <Label text="This is the list footer"></Label>
+            </GridLayout>
+        </ng-template>
+    </RadListView>
+    </StackLayout>
+   <StackLayout *tabItem="{title: 'no evaluado'}">
+        <Label text="TabView item with observable title and icon" textWrap="true" class="h2 m-x-auto" color="blue"></Label>
+    </StackLayout>
+    <StackLayout *tabItem="{title: 'Evaluación'}">
+        <router-outlet></router-outlet>
+    </StackLayout>
+</TabView>
+
+<!--
+<GridLayout>
     <RadListView [items]="rowHolder.row | async" tkExampleTitle tkToggleNavButton #rdid >
         <ng-template tkListItemTemplate let-item="item" let-index="index">
             <StackLayout orientation="vertical">
@@ -67,10 +113,11 @@
             </StackLayout>
         </ng-template>
         <ng-template tkListViewHeader>
-            <GridLayout backgroundColor="#65a565">
+            <StackLayout backgroundColor="#65a565">
                 <Label text="This is the list header"></Label>
-                <Button text="index" (tap)="goToIndex()"></Button>                
-            </GridLayout>
+                <Button text="index" (tap)="goToIndex()"></Button> 
+                <router-outlet></router-outlet>               
+            </StackLayout>
         </ng-template>
         <ng-template tkListViewFooter>
             <GridLayout backgroundColor="#7fff7f">
@@ -80,3 +127,4 @@
     </RadListView>
 
 </GridLayout>
+-->
